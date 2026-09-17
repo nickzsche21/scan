@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+/*
+  Warm paper, not another near-black page.
+
+  The five before this all sat between #07090b and #0b0c0f with a single accent;
+  PINNED went cool-white. This one is warm cream with a warm-black dark mode,
+  because here colour is *data*: the accumulator's type picks its own hue, and
+  the surface has to stay quiet enough for five saturated hues to read.
+
+  Both palettes were run through a categorical validator — lightness band,
+  chroma floor, CVD separation and 3:1 contrast — rather than picked by eye.
+  Pink/orange sit close under tritanopia, which is legal here only because every
+  colour is always accompanied by its type name in text. Never drop the label.
+*/
+:root {
+  --paper: #faf7f2;
+  --card: #ffffff;
+  --sunk: #f2ede5;
+  --rule: #ddd5c8;
+  --rule-soft: #ebe4d9;
+  --ink: #1c1a17;
+  --ink-soft: #6b6359;
+
+  --t-number: #2a6fd6;
+  --t-string: #1f8a4c;
+  --t-boolean: #7a4fc0;
+  --t-array: #c2610f;
+  --t-object: #b5397f;
+  --t-empty: #8a8178;
+  --t-other: #6b6359;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #16151a;
+    --card: #1e1c23;
+    --sunk: #26232c;
+    --rule: #3a3642;
+    --rule-soft: #2c2933;
+    --ink: #ece8f0;
+    --ink-soft: #9a93a3;
+
+    --t-number: #4f8ada;
+    --t-string: #2ba05f;
+    --t-boolean: #9370d1;
+    --t-array: #c17226;
+    --t-object: #c45a92;
+    --t-empty: #7d7688;
+    --t-other: #9a93a3;
+
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper: #16151a; --card: #1e1c23; --sunk: #26232c;
+  --rule: #3a3642; --rule-soft: #2c2933;
+  --ink: #ece8f0; --ink-soft: #9a93a3;
+  --t-number: #4f8ada; --t-string: #2ba05f; --t-boolean: #9370d1;
+  --t-array: #c17226; --t-object: #c45a92; --t-empty: #7d7688; --t-other: #9a93a3;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-card: var(--card);
+  --color-sunk: var(--sunk);
+  --color-rule: var(--rule);
+  --color-rule-soft: var(--rule-soft);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+
+  --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, system-ui, sans-serif;
+}
+
+html { background: var(--paper); -webkit-font-smoothing: antialiased; }
+body { background: var(--paper); color: var(--ink); font-family: var(--font-sans); margin: 0; overflow-x: hidden; }
+::selection { background: color-mix(in srgb, var(--t-number) 24%, transparent); }
+
+.mono { font-family: var(--font-mono); font-feature-settings: "tnum" 1, "zero" 1; }
+.label { font-family: var(--font-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .15em; }
+
+/* Ruled paper, so the page reads as a ledger the fold is written into. */
+.ruled {
+  background-image: repeating-linear-gradient(
+    to bottom, transparent, transparent 31px, var(--rule-soft) 31px, var(--rule-soft) 32px);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%);
+}
+
+@keyframes land { from { transform: translateY(-5px) scale(.985); opacity: .55 } to { transform: none; opacity: 1 } }
+.land { animation: land .22s cubic-bezier(.2,.9,.3,1) both; }
+
+@media (prefers-reduced-motion: reduce) { .land { animation: none } * { transition-duration: .01ms !important } }
