@@ -6,7 +6,7 @@
 lives in that middle — so here it is, one element at a time, with the accumulator's type coloured
 so you can watch it turn into something else.
 
-**Live: https://scan-nine.vercel.app**
+**Live: https://scan-psi-tawny.vercel.app**
 
 ---
 
